@@ -1,0 +1,22 @@
+{
+  "name": "i18n",
+  "version": "0.0.1",
+  "description": "The package template for getting started.",
+  "author": "Cocos Creator",
+  "main": "main.js",
+  "main-menu": {
+    "i18n:MAIN_MENU.package.title/i18n/open": {
+      "message": "i18n:open"
+    },
+    "i18n:MAIN_MENU.package.title/i18n/hello": {
+      "message": "i18n:say-hello"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "i18n",
+    "width": 400,
+    "height": 300
+  }
+}
