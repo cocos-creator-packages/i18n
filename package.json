@@ -7,16 +7,30 @@
   "main-menu": {
     "i18n:MAIN_MENU.package.title/i18n/open": {
       "message": "i18n:open"
-    },
-    "i18n:MAIN_MENU.package.title/i18n/hello": {
-      "message": "i18n:say-hello"
     }
   },
+  "runtime-resource": {
+    "path": "runtime-scripts",
+    "name": "plugin"
+  },
+  "reload": {
+    "ignore": [
+      "runtime-scripts/**/*"
+    ]
+  },
+  "scene-script": "scene-script.js",
   "panel": {
     "main": "panel/index.js",
     "type": "dockable",
     "title": "i18n",
     "width": 400,
-    "height": 300
+    "height": 300,
+    "profiles": { 
+      "project": {
+        "languages": [
+        ],
+        "default_language": ""
+      }
+    }
   }
 }

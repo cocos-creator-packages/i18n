@@ -1,0 +1,35 @@
+<h2>i18n</h2>
+<!--<hr />-->
+<!--<ui-prop name="Config File">
+    <div class="flex-1 layout horizontal center">
+        <ui-input class="flex-2" v-value="configPath" disabled></ui-input>
+        <ui-button class="tiny" v-on:confirm="_updateRuntimeConfig" v-disabled='_configExists()'>
+            Create JSON
+        </ui-button>
+    </div>
+</ui-prop>-->
+<hr />
+<ui-prop v-for='item in languages' name="{{item}}">
+    <div class="flex-1 layout horizontal center">
+        <ui-input class="flex-2" v-value="_dataPath(item)" disabled></ui-input>
+        <ui-button class="tiny" v-on:confirm="_deleteLanguage(item)">
+           Delete Language 
+        </ui-button>
+    </div>    
+</ui-prop>
+<hr />
+<ui-prop name="New Language ID">
+    <div class="flex-1 layout horizontal center">
+        <ui-input class="flex-2" v-value="newLangID"></ui-input>
+        <ui-button class="tiny" v-on:confirm="_createLanguage" v-disabled="!_validNewLang()">
+           Create 
+        </ui-button>
+    </div>     
+</ui-prop>
+<ui-select class="flex-1" v-value="defaultLanguage">
+    <template v-for="item in languages">
+        <option v-value="item">{{item}}</option>
+    </template>
+</ui-select>
+<hr />
+<ui-button id="btn">Send To Main</ui-button>
