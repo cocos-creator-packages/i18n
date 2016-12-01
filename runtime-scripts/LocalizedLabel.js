@@ -23,13 +23,8 @@ cc.Class({
     extends: cc.Component,
 
     editor: {
-        executeInEditMode: true
-    },
-
-    ctor: function() {
-        if(CC_EDITOR) {
-            this._debouncedUpdateLabel = debounce(this.updateLabel, 200);
-        }
+        executeInEditMode: true,
+        menu: 'i18n/LocalizedLabel'
     },
 
     properties: {
@@ -40,7 +35,11 @@ cc.Class({
             set (val) {
                 if (this._dataID !== val) {
                     this._dataID = val;
-                    this._debouncedUpdateLabel();
+                    if (CC_EDITOR) {
+                        this._debouncedUpdateLabel();
+                    } else {
+                        this.updateLabel();
+                    }
                 }
             }
         },
@@ -48,10 +47,13 @@ cc.Class({
     },
     
     onLoad () {
+        if(CC_EDITOR) {
+            this._debouncedUpdateLabel = debounce(this.updateLabel, 200);
+        }        
         if (!i18n.inst) {
             i18n.init();
         }
-        cc.log('dataID: ' + this.dataID + ' value: ' + i18n.t(this.dataID));
+        // cc.log('dataID: ' + this.dataID + ' value: ' + i18n.t(this.dataID));
         this.fetchRender();
     },
 

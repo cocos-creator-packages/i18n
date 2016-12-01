@@ -1,23 +1,19 @@
-<h2>i18n</h2>
-<!--<hr />-->
-<!--<ui-prop name="Config File">
-    <div class="flex-1 layout horizontal center">
-        <ui-input class="flex-2" v-value="configPath" disabled></ui-input>
-        <ui-button class="tiny" v-on:confirm="_updateRuntimeConfig" v-disabled='_configExists()'>
-            Create JSON
-        </ui-button>
-    </div>
-</ui-prop>-->
+<div class="flex-1 layout horizontal center">
+    <h1>i18n</h1>
+    <ui-button class="medium transparent" title="{{T('INSPECTOR.component.help')}}" hidden="{{!editor.help}}" @confirm="_openHelpClick">
+        <i class="fa fa-book"></i>
+    </ui-button>
+</div>
 <hr />
+<h2>Manage Languages</h2> 
 <ui-prop v-for='item in languages' name="{{item}}">
     <div class="flex-1 layout horizontal center">
-        <ui-input class="flex-2" v-value="_dataPath(item)" disabled></ui-input>
+        <ui-input class="flex-2" v-bind:value="_dataPath(item)" disabled></ui-input>
         <ui-button class="tiny" v-on:confirm="_deleteLanguage(item)">
            Delete Language 
         </ui-button>
     </div>    
 </ui-prop>
-<hr />
 <ui-prop name="New Language ID">
     <div class="flex-1 layout horizontal center">
         <ui-input class="flex-2" v-value="newLangID"></ui-input>
@@ -26,10 +22,12 @@
         </ui-button>
     </div>     
 </ui-prop>
-<ui-select class="flex-1" v-value="defaultLanguage">
-    <template v-for="item in languages">
-        <option v-value="item">{{item}}</option>
-    </template>
-</ui-select>
 <hr />
-<ui-button id="btn">Send To Main</ui-button>
+<ui-prop name="Preview Language">
+    <ui-select class="flex-1" v-value="defaultLanguage">
+        <template v-for="item in languages">
+            <option v-value="item">{{item}}</option>
+        </template>
+    </ui-select>
+</ui-prop>
+<hr />

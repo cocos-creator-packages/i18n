@@ -31,40 +31,11 @@ Editor.Panel.extend({
           profile.data['default_language'] = val;
           profile.save();
           Editor.Scene.callSceneScript('i18n', 'update-default-language', val, function (err, result) {
-            console.log(result);
+            // console.log(result);
           });
         }
       },
       methods: {
-        // _updateRuntimeConfig () {
-        //   if (!this._configExists()) {
-        //     let resultId = Editor.Dialog.messageBox({
-        //       type: 'question',
-        //       buttons: ['OK', 'Cancel'],
-        //       title: 'Create i18n Config',
-        //       message: 'Create i18n config file for runtime script usage',
-        //       detail: 'assets/resources/i18n/config.json',
-        //       noLink: true
-        //     });
-        //     if (resultId === 1) {
-        //       return;
-        //     } 
-        //   }
-        //   Fs.writeFileSync(configPath, JSON.stringify({
-        //     languages: this.languages,
-        //     default_language: this.defaultLanguage
-        //   }, null, 2));
-        //   Editor.Ipc.sendToMain('i18n:import-asset', 'db://' + Path.relative(projectPath, configPath).replace(/\\/g, '/'));
-        // },
-
-        // _configExists () {
-        //   if (Fs.existsSync(configPath)) {
-        //     this.configPath = Path.relative(projectPath, configPath).replace(/\\/g, '/');
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // },
 
         _dataPath (language) {
           return Path.relative(projectPath, Path.join(i18nPath, language + '.js')).replace(/\\/g, '/');
@@ -135,6 +106,13 @@ Editor.Panel.extend({
             return false;
           }
           return true;
+        },
+
+        _openHelpClick (event) {
+          event.stopPropagation();
+          let url = 'https://github.com/cocos-creator-packages/i18n#i18n-for-cocos-creator';
+          const Electron = require('electron');
+          Electron.shell.openExternal(url);
         }
       }
     });
