@@ -1,4 +1,10 @@
-const i18n = require('LanguageData');
+const SpriteFrameSet = cc.Class({
+    name: 'SpriteFrameSet',
+    properties: {
+        language: '',
+        spriteFrame: cc.SpriteFrame
+    }
+});
 
 cc.Class({
     extends: cc.Component,
@@ -8,22 +14,10 @@ cc.Class({
     },
 
     properties: {
-        dataID: {
-            get () {
-                return this._dataID;
-            },
-            set (val) {
-                if (this._dataID !== val) {
-                    this._dataID = val;
-                    this.updateSprite();
-                }
-            }
-        },
-        _dataID: ''
+        spriteFrameSet: [SpriteFrameSet]
     },
     
     onLoad () {
-        i18n.init('zh');
         this.fetchRender();
     },
 
@@ -31,23 +25,31 @@ cc.Class({
         let sprite = this.getComponent(cc.Sprite);
         if (sprite) {
             this.sprite = sprite;
-            this.updateSprite();
+            this.updateSprite(window.i18n.curLang);
             return;
         }
     },
 
-    updateSprite () {
+    getSpriteFrameByLang (lang) {
+        for (let i = 0; i < this.spriteFrameSet.length; ++i) {
+            if (this.spriteFrameSet[i].language === lang) {
+                return this.spriteFrameSet[i].spriteFrame;
+            }
+        }
+    },
+
+    updateSprite (language) {
         if (!this.sprite) {
             cc.error('Failed to update localized sprite, sprite component is invalid!');
             return;
         }
-        let localizedUrl = i18n.t(this.dataID);
-        if (localizedUrl && this.sprite.spriteFrame) {
-            if (CC_EDITOR) {
-                return;
-            } 
-            let sfUUID = this.sprite.spriteFrame._uuid;
-            window._CCSettings.rawAssets.assets[sfUUID][0] = localizedUrl;
+
+        let spriteFrame = this.getSpriteFrameByLang(language);
+
+        if (!spriteFrame) {
+            spriteFrame = this.spriteFrameSet[0].spriteFrame;
         }
+
+        this.sprite.spriteFrame = spriteFrame;
     }
 });

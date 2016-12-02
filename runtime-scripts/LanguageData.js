@@ -1,16 +1,17 @@
 const Polyglot = require('polyglot.min');
-const Fs = require('fs');
-const Path = require('path');
 
 let polyInst = null;
-let curLang = '';
+if (!window.i18n) window.i18n = {};
+window.i18n.curLang = '';
 
 if (CC_EDITOR) {
-    let profilePath = Path.join(Editor.projectInfo.path, 'settings', 'i18n.json');
-    // if (fs.existsSync(profilePath)) {
-    let profile = JSON.parse(Fs.readFileSync(profilePath, 'utf8'));
-    curLang = profile['default_language'];
-    // }
+    Editor.Profile.load('profile://project/i18n.json', (err, profile) => {
+        window.i18n.curLang = profile['default_language'];
+        if (polyInst) {
+            data = loadLanguageData(language);            
+            initPolyglot(data);
+        }
+    });
 }
 
 function loadLanguageData (language) {
@@ -35,15 +36,15 @@ module.exports = {
      * @param language - the language specific data file name, such as 'zh' to load 'zh.js'
      */
     init (language) {
-        if (language && language === curLang) {
+        if (language && language === window.i18n.curLang) {
             return;
         }
         let data = null;
         if (!language) {
-            data = loadLanguageData(curLang);
+            data = loadLanguageData(window.i18n.curLang);
         } else {
             data = loadLanguageData(language);
-            curLang = language;
+            window.i18n.curLang = language;
         }
         initPolyglot(data);
     },
@@ -67,5 +68,29 @@ module.exports = {
         }
     },
 
-    inst: polyInst
+    inst: polyInst,
+
+    updateSceneRenderers () { // very costly iterations
+        let rootNodes = cc.director.getScene().children;
+        // walk all nodes with localize label and update
+        let allLocalizedLabels = [];
+        for (let i = 0; i < rootNodes.length; ++i) {
+            let labels = rootNodes[i].getComponentsInChildren('LocalizedLabel');
+            Array.prototype.push.apply(allLocalizedLabels, labels);
+        }
+        for (let i = 0; i < allLocalizedLabels.length; ++i) {
+            let label = allLocalizedLabels[i];
+            label.updateLabel();
+        }
+        // walk all nodes with localize sprite and update
+        let allLocalizedSprites = [];
+        for (let i = 0; i < rootNodes.length; ++i) {
+            let sprites = rootNodes[i].getComponentsInChildren('LocalizedSprite');
+            Array.prototype.push.apply(allLocalizedSprites, sprites);
+        }
+        for (let i = 0; i < allLocalizedSprites.length; ++i) {
+            let sprite = allLocalizedSprites[i];
+            sprite.updateSprite(window.i18n.curLang);
+        }
+    }
 };
