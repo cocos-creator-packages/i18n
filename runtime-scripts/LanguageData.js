@@ -1,8 +1,7 @@
 const Polyglot = require('polyglot.min');
 
 let polyInst = null;
-if (!window.i18n) window.i18n = {};
-window.i18n.curLang = '';
+if (!window.i18n) window.i18n = {languages:{},curLang:''};
 
 if (CC_EDITOR) {
     Editor.Profile.load('profile://project/i18n.json', (err, profile) => {
@@ -15,7 +14,7 @@ if (CC_EDITOR) {
 }
 
 function loadLanguageData (language) {
-    return window.i18n[language];
+    return window.i18n.languages[language];
 }
 
 function initPolyglot (data) {

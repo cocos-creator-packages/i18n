@@ -1,22 +1,21 @@
-const SpriteFrameSet = cc.Class({
-    name: 'SpriteFrameSet',
-    properties: {
-        language: '',
-        spriteFrame: cc.SpriteFrame
-    }
-});
+const SpriteFrameSet = require('SpriteFrameSet');
 
 cc.Class({
     extends: cc.Component,
 
     editor: {
-        executeInEditMode: true
+        executeInEditMode: true,
+        // inspector: 'packages://i18n/inspector/localized-sprite.js',
+        menu: 'i18n/LocalizedSprite'
     },
 
     properties: {
-        spriteFrameSet: [SpriteFrameSet]
+        spriteFrameSet: {
+            default: [],
+            type: SpriteFrameSet
+        }
     },
-    
+
     onLoad () {
         this.fetchRender();
     },
@@ -46,7 +45,7 @@ cc.Class({
 
         let spriteFrame = this.getSpriteFrameByLang(language);
 
-        if (!spriteFrame) {
+        if (!spriteFrame && this.spriteFrameSet[0]) {
             spriteFrame = this.spriteFrameSet[0].spriteFrame;
         }
 
