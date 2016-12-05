@@ -10,9 +10,7 @@ Cocos Creator 编辑器扩展：实现 Label 和 Sprite 组件的多语言国际
 
 请参考 [扩展编辑器:安装与分享](http://www.cocos.com/docs/creator/extension/install-and-share.html) 文档。
 
-## 使用方法
-
-### 语言配置
+## 语言配置
 
 首先从主菜单打开 i18n 面板： `插件->i18n`。
 
@@ -24,11 +22,13 @@ Cocos Creator 编辑器扩展：实现 Label 和 Sprite 组件的多语言国际
 
 接下来在 i18n 面板的 `Preview Language` 部分的下拉菜单里就可以选择编辑器里预览时的语言了。
 
+## 本地化 Label 文本
+
 ### 添加 Localize 组件
 
 i18n 插件提供了两种组件分别用于配合 [Label](http://www.cocos.com/docs/creator/components/label.html) 和 [Sprite](http://www.cocos.com/docs/creator/components/sprite.html) 来显示多语言内容。
 
-以 Label 为例，我们可以在场景或 prefab 中任何 Label 组件所在的节点上添加 `i18n/LocalizedLabel` 组件。这个组件只需要输入翻译数据索引的 dataID 就可以根据当前语言来更新 Label 的字符串显示。
+我们从 Label 开始，我们可以在场景或 prefab 中任何 Label 组件所在的节点上添加 `i18n/LocalizedLabel` 组件。这个组件只需要输入翻译数据索引的 dataID 就可以根据当前语言来更新 Label 的字符串显示。
 
 下面我们来介绍如何配置 dataID。
 
@@ -92,4 +92,20 @@ cc.log(myGreeting); // Hello!
 ```
 
 
+## 本地化 Sprite 图片
 
+### 添加 LocalizedSprite 组件
+
+首先在场景或 prefab 中任何 Sprite 组件所在的节点上添加 `i18n/LocalizedSprite` 组件。该组件需要我们手动添加一组语言 id 和 SpriteFrame 的映射，就可以在编辑器预览和运行时显示正确语言的图片了。
+
+### 添加语言图片映射
+
+负责承载语言到贴图映射的属性 `spriteFrameSet` 是一个数组，我们可以像操作其他数组属性一样来添加新的映射
+
+- 首先设置数组的大小，要和语言种类相等
+- 为每一项里的 `language` 属性填入对应语言的 id，如 `en` 或 `zh`
+- 将语言对应的贴图（或 SpriteFrame）拖拽到 `spriteFrame` 属性里。
+
+完成设置后，点击下面的 `Refresh` 按钮，就可以在场景中看到效果了。
+
+和 `LocalizedLabel` 一样，当我们在 i18n 面板设更改了预览语言时，当前场景里所有的 `LocalizedSprite` 也会自动刷新，显示当前语言对应的图片。

@@ -5,7 +5,7 @@ cc.Class({
 
     editor: {
         executeInEditMode: true,
-        // inspector: 'packages://i18n/inspector/localized-sprite.js',
+        inspector: 'packages://i18n/inspector/localized-sprite.js',
         menu: 'i18n/LocalizedSprite'
     },
 
