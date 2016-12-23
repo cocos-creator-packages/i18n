@@ -55,10 +55,6 @@ Editor.Panel.extend({
               return;
             }            
           });
-          // Editor.Ipc.sendToMain(
-          //   'i18n:import-asset', 
-          //   'db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/')
-          //   );
 
           this.languages.push(this.newLangID);
           this.newLangID = '';
@@ -84,10 +80,6 @@ Editor.Panel.extend({
                   return;
                 }
               });
-              // Editor.Ipc.sendToMain(
-              //   'i18n:delete-asset',
-              //   'db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/')
-              // );  
             }          
           } else {
             Editor.log('Language data not existing, remove from languages list');
