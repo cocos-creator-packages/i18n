@@ -5,7 +5,6 @@ const Path = require('path');
 module.exports = {
   load () {
     Fs.ensureDirSync(Path.join(Editor.projectPath, 'assets', 'resources', 'i18n'));
-    Editor.Metrics.trackPackage('i18n', 'Load', null);
   },
 
   unload () {
@@ -17,7 +16,11 @@ module.exports = {
     'open' () {
       // open entry panel registered in package.json
       Editor.Panel.open('i18n');
-      Editor.Metrics.trackPackage('i18n', 'Panel Open', null);
+      Editor.Metrics.trackEvent({
+        category: 'Packages',
+        label: 'i18n',
+        action: 'Panel Open'
+      }, null);
     },
     'import-asset' (event, path) {
       Editor.assetdb.refresh(path, (err, results) => {
