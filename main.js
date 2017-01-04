@@ -4,17 +4,6 @@ const Path = require('path');
 
 module.exports = {
   load () {
-    // execute when package loaded
-    // let scriptPath = Path.join(Editor.projectPath, 'assets', 'package-scripts');
-    // Fs.copy(Path.join(Editor.url('packages://i18n'), 'runtime-scripts'), scriptPath, {clobber: true},
-    //   (err) => {
-    //     if (err) {
-    //       Editor.error(err);
-    //       return;
-    //     }
-    //     Editor.log('Updated runtime scripts to ' + scriptPath);
-    // });
-    // ensure resources
     Fs.ensureDirSync(Path.join(Editor.projectPath, 'assets', 'resources', 'i18n'));
   },
 
@@ -27,14 +16,11 @@ module.exports = {
     'open' () {
       // open entry panel registered in package.json
       Editor.Panel.open('i18n');
-    },
-    'say-hello' () {
-      Editor.log('Hello World!');
-      // send ipc message to panel
-      Editor.Ipc.sendToPanel('i18n', 'i18n:hello');
-    },
-    'clicked' () {
-      Editor.log('Button clicked!');
+      Editor.Metrics.trackEvent({
+        category: 'Packages',
+        label: 'i18n',
+        action: 'Panel Open'
+      }, null);
     },
     'import-asset' (event, path) {
       Editor.assetdb.refresh(path, (err, results) => {
@@ -54,8 +40,6 @@ module.exports = {
           return;
         }
       });
-    },
-    'delete-asset' (event, path) {
     }
   },
 };

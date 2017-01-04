@@ -45,7 +45,8 @@ Editor.Panel.extend({
           var dataPath = Path.join(i18nPath, this.newLangID + '.js');
           Fs.writeFileSync(dataPath, 
             'if (!window.i18n) window.i18n = {};\n'
-            + 'window.i18n.' + this.newLangID + '={\n'
+            + 'if (!window.i18n.languages) window.i18n.languages = {};\n'
+            + 'window.i18n.languages.' + this.newLangID + '={\n'
             + '// write your key value pairs here\n'
             + '};'
             );
@@ -55,10 +56,6 @@ Editor.Panel.extend({
               return;
             }            
           });
-          // Editor.Ipc.sendToMain(
-          //   'i18n:import-asset', 
-          //   'db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/')
-          //   );
 
           this.languages.push(this.newLangID);
           this.newLangID = '';
@@ -84,10 +81,6 @@ Editor.Panel.extend({
                   return;
                 }
               });
-              // Editor.Ipc.sendToMain(
-              //   'i18n:delete-asset',
-              //   'db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/')
-              // );  
             }          
           } else {
             Editor.log('Language data not existing, remove from languages list');
