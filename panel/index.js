@@ -43,24 +43,44 @@ Editor.Panel.extend({
 
         _createLanguage () {
           var dataPath = Path.join(i18nPath, this.newLangID + '.js');
-          Fs.writeFileSync(dataPath, 
-            'if (!window.i18n) window.i18n = {};\n'
+          var resPath = Path.join(projectPath, 'assets', 'resources');  
+          var initData = 'if (!window.i18n) window.i18n = {};\n'
             + 'if (!window.i18n.languages) window.i18n.languages = {};\n'
             + 'window.i18n.languages.' + this.newLangID + '={\n'
             + '// write your key value pairs here\n'
-            + '};'
-            );
-          Editor.assetdb.refresh('db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/'), (err, results) => {
-            if (err) {
-              Editor.assetdb.error('Failed to reimport asset %s, %s', path, err.stack);
-              return;
-            }            
-          });
-
-          this.languages.push(this.newLangID);
-          this.newLangID = '';
-          profile.data.languages = this.languages;
-          profile.save();
+            + '};';
+          var createAsset = function () {
+            var url = 'db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/'); 
+            Editor.assetdb.create(url, initData, function (err) {
+              if (err) {
+                Editor.assetdb.error('Failed to create asset %s, %s', url, err.stack);
+                return;
+              }
+              this.languages.push(this.newLangID);
+              this.newLangID = '';
+              profile.data.languages = this.languages;
+              profile.save();
+            }.bind(this));
+          }.bind(this);
+          if (!Fs.isDirSync(resPath)) {
+            Editor.assetdb.create('db://assets/resources', null, function(err) {
+              Editor.assetdb.create('db://assets/resources/i18n', null, function(err) {
+                createAsset();
+              });
+            });
+          } else if (!Fs.isDirSync(i18nPath)) {
+              Editor.assetdb.create('db://assets/resources/i18n', null, function(err) {
+                createAsset();
+              });              
+          } else {
+            createAsset();
+          }
+          // Editor.assetdb.refresh('db://' + Path.relative(projectPath, dataPath).replace(/\\/g, '/'), (err, results) => {
+          //   if (err) {
+          //     Editor.assetdb.error('Failed to reimport asset %s, %s', path, err.stack);
+          //     return;
+          //   }            
+          // });
         },
 
         _deleteLanguage (lang) {
