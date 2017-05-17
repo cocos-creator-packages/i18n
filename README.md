@@ -78,6 +78,8 @@ i18n.init('zh'); // languageID should be equal to the one we input in New Langua
 
 需要在之后动态切换语言时也可以调用 `i18n.init()`。
 
+如果切换后需要马上更新当前场景，可以调用 `i18n.updateSceneRenderer()`。
+
 注意运行时必须保证 `i18n.init(language)` 在包含有 LocalizedLabel 组件的场景加载前执行，否则将会因为组件上无法加载到数据而报错。
 
 ### 脚本中使用翻译键值对获取字符串
