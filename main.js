@@ -1,14 +1,17 @@
 'use strict';
+
+const Package = require('./utils/package');
+
 const Fs = require('fire-fs');
 const Path = require('path');
 
 module.exports = {
   load () {
-    Fs.ensureDirSync(Path.join(Editor.projectPath, 'assets', 'resources', 'i18n'));
+    Package.mount();
   },
 
   unload () {
-    // execute when package unloaded
+    Package.unmount();
   },
 
   // register your ipc messages here
@@ -16,11 +19,7 @@ module.exports = {
     'open' () {
       // open entry panel registered in package.json
       Editor.Panel.open('i18n');
-      Editor.Metrics.trackEvent({
-        category: 'Packages',
-        label: 'i18n',
-        action: 'Panel Open'
-      }, null);
+      Package.metrics();
     },
     'import-asset' (event, path) {
       Editor.assetdb.refresh(path, (err, results) => {

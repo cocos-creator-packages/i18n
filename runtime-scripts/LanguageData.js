@@ -5,7 +5,7 @@ if (!window.i18n) window.i18n = {languages:{},curLang:''};
 
 if (CC_EDITOR) {
     Editor.Profile.load('profile://project/i18n.json', (err, profile) => {
-        window.i18n.curLang = profile['default_language'];
+        window.i18n.curLang = profile.data['default_language'];
         if (polyInst) {
             data = loadLanguageData(window.i18n.curLang);            
             initPolyglot(data);
