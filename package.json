@@ -18,19 +18,19 @@
       "runtime-scripts/**/*"
     ]
   },
-  "scene-script": "scene-script.js",
+  "scene-script": "utils/scene.js",
   "panel": {
     "main": "panel/index.js",
     "type": "dockable",
     "title": "i18n",
     "width": 400,
-    "height": 300,
-    "profiles": { 
-      "project": {
-        "languages": [
-        ],
-        "default_language": ""
-      }
+    "height": 300
+  },
+  "profiles": { 
+    "project": {
+      "languages": [
+      ],
+      "default_language": ""
     }
   }
 }
