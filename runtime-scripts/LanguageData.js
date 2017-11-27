@@ -43,7 +43,7 @@ module.exports = {
         if (language === window.i18n.curLang) {
             return;
         }
-        let data = loadLanguageData(window.i18n.curLang) || {};
+        let data = loadLanguageData(language) || {};
         window.i18n.curLang = language;
         initPolyglot(data);
     },
