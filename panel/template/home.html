@@ -1,7 +1,7 @@
 <div class="home">
 
     <header>
-        <span>当前语言：</span>
+        <span>{{_t('current')}}</span>
         <span>
             <ui-select
                 v-value="current"
@@ -51,8 +51,10 @@
     >
         <div class="mask"></div>
         <div class="language">
-            <h3>创建新语言</h3>
-            <ui-prop name="语言名称">
+            <h3>{{_t('create_language')}}</h3>
+            <ui-prop 
+                :name="_t('language')"
+            >
                 <ui-input
                     v-value="_language"
                 ></ui-input>
@@ -60,10 +62,10 @@
             <div class="button">
                 <ui-button
                     @click="createLanguage(_language)"
-                >创建</ui-button>
+                >{{_t('create')}}</ui-button>
                 <ui-button
                     @click="changeCreate"
-                >取消</ui-button>
+                >{{_t('cancel')}}</ui-button>
             </div>
         </div>
     </div>
