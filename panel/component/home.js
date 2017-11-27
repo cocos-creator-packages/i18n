@@ -28,6 +28,9 @@ exports.watch = {
 };
 
 exports.methods = {
+    _t (key) {
+        return Editor.T(`i18n.${key}`);
+    },
 
     _getLanguagePath (language) {
         return Path.join('resources/i18n/', `${language}.js`);
