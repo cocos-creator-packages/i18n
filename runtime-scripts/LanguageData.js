@@ -35,16 +35,11 @@ module.exports = {
      * @param language - the language specific data file name, such as 'zh' to load 'zh.js'
      */
     init (language) {
-        if (language && language === window.i18n.curLang) {
+        if (language === window.i18n.curLang) {
             return;
         }
-        let data = null;
-        if (!language) {
-            data = loadLanguageData(window.i18n.curLang);
-        } else {
-            data = loadLanguageData(language);
-            window.i18n.curLang = language;
-        }
+        let data = loadLanguageData(window.i18n.curLang) || {};
+        window.i18n.curLang = language;
         initPolyglot(data);
     },
     /**
