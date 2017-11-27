@@ -5,7 +5,7 @@
   "author": "Cocos Creator",
   "main": "main.js",
   "main-menu": {
-    "i18n:MAIN_MENU.package.title/i18n/open": {
+    "i18n:MAIN_MENU.package.title/i18n": {
       "message": "i18n:open"
     }
   },
@@ -24,7 +24,9 @@
     "type": "dockable",
     "title": "i18n",
     "width": 400,
-    "height": 300
+    "height": 300,
+    "min-width": 300,
+    "min-height": 300
   },
   "profiles": { 
     "project": {
