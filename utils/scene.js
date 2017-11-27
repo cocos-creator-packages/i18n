@@ -3,16 +3,16 @@
 let message = {};
 
 message['update-default-language'] = function (event, language) {
-    if (language) {
-        let i18n = cc.require('LanguageData');
-        i18n.init(language);
-        i18n.updateSceneRenderers();
-        if (event.reply) {
-            event.reply(null, 'successful');
-        }
+    let i18n = cc.require('LanguageData');
+    i18n.init(language);
+    i18n.updateSceneRenderers();
+    if (!event.reply) {
         return;
     }
-    if (event.reply) {
+
+    if (language) {
+        event.reply(null, 'successful');
+    } else {
         event.reply(new Error('language not specified!'));
     }
 };

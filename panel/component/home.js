@@ -111,6 +111,9 @@ exports.methods = {
             let index = this.languages.indexOf(name);
             this.languages.splice(index, 1);
             Event.emit('languages-changed', this.languages);
+            if (name === this.current) {
+                this.current = this.languages[0] || '';
+            }
         }).catch(() => {
             // todo 错误提示
         });
