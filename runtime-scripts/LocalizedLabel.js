@@ -50,9 +50,9 @@ cc.Class({
         if(CC_EDITOR) {
             this._debouncedUpdateLabel = debounce(this.updateLabel, 200);
         }        
-        if (!i18n.inst) {
-            i18n.init();
-        }
+//         if (!i18n.inst) {
+//             i18n.init();
+//         }
         // cc.log('dataID: ' + this.dataID + ' value: ' + i18n.t(this.dataID));
         this.fetchRender();
     },
