@@ -46,6 +46,7 @@ module.exports = {
         let data = loadLanguageData(language) || {};
         window.i18n.curLang = language;
         initPolyglot(data);
+        this.inst = polyInst;
     },
     /**
      * this method takes a text key as input, and return the localized string
