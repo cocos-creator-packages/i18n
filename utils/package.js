@@ -3,7 +3,7 @@
 const Fs = require('fire-fs');
 const Path = require('path');
 
-let PATH = Path.join(Editor.projectPath, './assets/resources/i18n');
+let PATH = Path.join(Editor.Project.path, './assets/resources/i18n');
 
 let mount = function () {
     // 创建目录，保证目录存在
