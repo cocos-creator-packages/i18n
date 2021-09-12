@@ -1,4 +1,4 @@
-# i18n for Cocos Creator
+# I18n for Cocos Creator
 
 > 本仓库已暂停维护，仅供存档，建议开发者们在项目层面自行实现多语言切换。
 
@@ -14,8 +14,7 @@ Cocos Creator 编辑器扩展：实现 Label 和 Sprite 组件的多语言国际
 
 ## 语言配置
 
-首先从主菜单打开 i18n 面板： `插件->i18n`。
-
+首先从主菜单打开 i18n 面板： `扩展` -> `I18n Setting`。
 
 然后需要创建包含多语言翻译数据的 JSON 文件（为了方便使用采用 .js 格式存储）：
 
@@ -39,16 +38,22 @@ i18n 插件提供了两种组件分别用于配合 [Label](http://www.cocos.com/
 插件创建的翻译数据模板是这样的：
 
 ```js
-// zh.js
+const win = window as any;
 
-if (!window.i18n) window.i18n = {};
-window.i18n.zh={
-// write your key value pairs here
-    "label_text": {
-        "hello": "你好！",
-        "bye": "再见！"
-    }
+export const languages = {
+    label_text: {
+        hello: '你好！',
+        bye: '再见！',
+    },
 };
+
+if (!win.languages) {
+    win.languages = {};
+}
+
+if (!win.languages.zh) {
+    win.languages.zh = languages;
+}
 ```
 
 其中 `window.i18n.zh` 全局变量的写法让我们可以在脚本中随时访问到这些数据，而不需要进行异步的加载。
@@ -59,7 +64,6 @@ window.i18n.zh={
 
 - "label_text.hello" : "你好！"
 - "label_text.bye" : "再见！"
-
 
 ### 查看效果
 
@@ -73,9 +77,9 @@ window.i18n.zh={
 
 游戏运行时可以根据用户操作系统语言或菜单选择来设置语言，在获取到需要使用的语言 ID 后，需要用以下的代码来进行初始化：
 
-```js
-const i18n = require('LanguageData');
-i18n.init('zh'); // languageID should be equal to the one we input in New Language ID input field
+```typescript
+import * as i18n from 'db://i18n/LanguageData';
+i18n.init('zh');
 ```
 
 需要在之后动态切换语言时也可以调用 `i18n.init()`。
@@ -88,13 +92,12 @@ i18n.init('zh'); // languageID should be equal to the one we input in New Langua
 
 除了和 LocalizedLabel 配合使用解决场景中静态 Label 的多语言问题，`LanguageData` 模块还可以单独在脚本中使用，提供运行时的翻译：
 
-```js
-const i18n = require('LanguageData');
+```typescript
+import * as i18n from 'db://i18n/LanguageData';
 i18n.init('en');
 let myGreeting = i18n.t('label_text.hello');
 cc.log(myGreeting); // Hello!
 ```
-
 
 ## 本地化 Sprite 图片
 
