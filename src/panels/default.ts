@@ -16,9 +16,7 @@ if (!win.languages) {
     win.languages = {};
 }
 
-if (!win.languages.{{name}}) {
-    win.languages.{{name}} = languages;
-}
+win.languages.{{name}} = languages;
 `;
 
 module.exports = Editor.Panel.define({

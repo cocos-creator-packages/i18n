@@ -43,6 +43,14 @@
             "mount": {
                 "path": "./assets"
             }
+        },
+        "profile": {
+            "project": {
+                "first": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }
         }
     },
     "dependencies": {

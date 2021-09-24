@@ -13,5 +13,7 @@ export const methods = {
         debugger;
         win._languageData.init(lang);
         win._languageData.updateSceneRenderers();
+        // @ts-ignore
+        cce.Engine.repaintInEditMode();
     },
 };
