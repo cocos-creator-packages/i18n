@@ -1,6 +1,6 @@
 {
     "package_version": 2,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "i18n",
     "description": "i18n:i18n.description",
     "main": "./dist/main.js",

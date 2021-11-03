@@ -9,8 +9,17 @@ const { ccclass, property, executeInEditMode } = _decorator;
 export class LocalizedLabel extends Component {
     label: Label | null = null;
 
-    @property
+    @property({ visible: false })
     key: string = '';
+
+    @property({ displayName: 'Key', visible: true })
+    get _key() {
+        return this.key;
+    }
+    set _key(str: string) {
+        this.updateLabel();
+        this.key = str;
+    }
 
     onLoad() {
         if (!i18n.ready) {

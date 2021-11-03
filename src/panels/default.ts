@@ -19,6 +19,11 @@ if (!win.languages) {
 win.languages.{{name}} = languages;
 `;
 
+// 兼容 3.3.0 之前的版本
+Editor.Panel.define = Editor.Panel.define || function(options) {
+    return options;
+}
+
 module.exports = Editor.Panel.define({
     template: `
     <div class="content">
