@@ -46,7 +46,14 @@ export class LocalizedSprite extends Component {
             // @ts-ignore
             if (item.language === i18n._language) {
                 // @ts-ignore
-                this.sprite.spriteFrame = item.spriteFrame;
+                if(this.sprite == null) {
+                    let sprite = this.getComponent('cc.Sprite') as Sprite;
+                    if (sprite) {
+                        this.sprite = sprite;
+                    }
+                }
+
+                this.sprite && (this.sprite.spriteFrame = item.spriteFrame);
                 break;
             }
         }
